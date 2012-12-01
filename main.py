@@ -8,6 +8,7 @@ from commands import getoutput
 
 from hook import GistHook, LocalHook
 from install import Installer
+from rcmanager.loader import SettingFile
 
 def separate_hook(path_str):
     #マシな方法探す
@@ -27,12 +28,15 @@ def separate_hook(path_str):
     return build_hook()
 
 def main():
-    if len(sys.argv) == 2:
-        installer = Installer()
-        installer.install(separate_hook(sys.argv[1]),sys.argv[1])
-    else:
-        print 'invailed argments'
-        quit()
+    installer = Installer()
+    setting_file = SettingFile()
+    #TODO
+    for line in setting_file.get_lines():
+        for li in line:
+            print 'id:' + li
+            uri = li.split('/')[0]
+            installer.install(separate_hook(uri), uri)
+
 
 if __name__ == '__main__':
     main()
