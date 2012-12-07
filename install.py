@@ -1,9 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from commands import getoutput
-
-import os.path
 
 class Installer(object):
     """ install hook on hook-dir. """
