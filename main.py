@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import sys
 import re
 from os import path
 from commands import getoutput
@@ -34,7 +33,7 @@ def main():
     for line in setting_file.get_lines():
         for li in line:
             print 'id:' + li
-            uri = li.split('/')[0]
+            uri = li.split(',')[0]
             installer.install(separate_hook(uri), uri)
 
 
