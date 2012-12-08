@@ -50,8 +50,9 @@ class LocalHook(Hook):
         Hook.__init__(self,install_dir)
 
     def install(self, contents_path):
-        file_path = contents_path.split('/')[-1]
+        file_path = path.join(self.install_dir, contents_path.split('/')[-1])
         copyfile(contents_path, file_path)
+        print 'install local script'
 
 
 class InstalledHook(Hook):
@@ -60,7 +61,7 @@ class InstalledHook(Hook):
         Hook.__init__(self,install_dir)
 
     def install(self, contents_path):
-        full_path = self.install_dir + contents_path.split('/')[-1]
+        full_path = path.join(self.install_dir, contents_path.split('/')[-1])
         copyfile(contents_path, full_path)
 
 
