@@ -85,28 +85,26 @@ class GistHook(Hook):
 
 class LocalHook(Hook):
 
-    def __init__(self, install_dir):
-        Hook.__init__(self,install_dir)
+    def __init__(self, _contents_path, _hooktype):
+        Hook.__init__(self, _contents_path, _hooktype)
 
-    def install(self, contents_path):
-        file_path = path.join(self.install_dir, contents_path.split('/')[-1])
-        copyfile(contents_path, file_path)
+    def install(self, git_hook_dir):
+        file_name = self._contents_path.split('/')[-1]
+        hook_code = open(self._contents_path).read()
+        self._write(file_name, hook_code)
         print 'install local script'
 
-
-class InstalledHook(Hook):
-
-    def __init__(self, install_dir):
-        Hook.__init__(self,install_dir)
-
-    def install(self, contents_path):
-        full_path = path.join(self.install_dir, contents_path.split('/')[-1])
-        copyfile(contents_path, full_path)
-
+#class InstalledHook(Hook):
+#
+#    def __init__(self, _contents_path, _hooktype):
+#        Hook.__init__(self, _contents_path, _hooktype)
+#
+#    def install(self, git_hook_dir):
+#        full_path = path.join(self.install_dir, contents_path.split('/')[-1])
+#        copyfile(contents_path, full_path)
 
 class HookContent(object):
     __slots__ = ('name', 'description')
-
 
 #TODO 気が向いたらモジュールにわける
 class Gist(object):
