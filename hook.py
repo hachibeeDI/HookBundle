@@ -16,10 +16,13 @@ install, description(info), original_path
 
 def configuration_parser(line):
     """ parse dotfile's configration and built Hook object. """
-    st = line.split(',')
+    st = line.rstrip().split(',')
     uri = st[0]
     hooktype = st[1]
-    description = st[2]
+    try:
+        description = st[2]
+    except IndexError:
+        print 'no description'
 
     def build_hook():
         # if there is only numbers, it is gist-id
