@@ -90,7 +90,8 @@ class GistHook(Hook):
         print u'get from raw-url: %s\n' % raw_url
         print u'description: %s\n' % gist.get_description()
         hook_code = requests.get(raw_url).content
-        self._write(gist.get_filename(), hook_code)
+        full_path = self._build_fullpath(git_hook_dir, gist.get_filename())
+        self._write(full_path, hook_code)
 
 
 class LocalHook(Hook):
@@ -99,9 +100,9 @@ class LocalHook(Hook):
         Hook.__init__(self, _contents_path, _hooktype)
 
     def install(self, git_hook_dir):
-        file_name = self._contents_path.split('/')[-1]
         hook_code = open(self._contents_path).read()
-        self._write(file_name, hook_code)
+        full_path = self._build_fullpath(git_hook_dir, self._contents_path.split('/')[-1])
+        self._write(full_path, hook_code)
         print 'install local script'
 
 #class InstalledHook(Hook):
