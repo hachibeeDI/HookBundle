@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import re
-from os import path
+from os import path, mkdir, sep as path_separator
 
 import requests
 import json
@@ -62,11 +62,17 @@ class Hook(object):
         #TODO あとでNotImplementExceptionだか作る
         raise Exception()
 
-    def _write(self, file_name, code):
-        target_fullpath = path.join(self.install_dir,
-                          self._hooktype_save_location, file_name)
-        with open(target_fullpath, 'w') as hook_file:
+    def _write(self, install_path, code):
+        sp_tmp = install_path.split(path_separator)
+        # 末尾のファイル名を除いた、ディレクトリ名
+        targ_dir = path_separator.join([sp_tmp[i] for i in range(1, len(sp_tmp) - 1)])
+        if not path.isdir(targ_dir):
+            mkdir(targ_dir)
+        with open(install_path, 'w') as hook_file:
             hook_file.write(code)
+
+    def _build_fullpath(self, hook_dir, filename):
+        return path.join(hook_dir, self._hooktype_save_location, filename)
 
 
 class GistHook(Hook):
