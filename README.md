@@ -1,4 +1,5 @@
 HookBundle
 ==========
 
-manage git hooks as bundle
+manage git hooks like bundle
+
