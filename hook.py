@@ -39,7 +39,7 @@ class Hook(object):
     """ abstract class. This work as hook contents. """
 
     # ひとまずこんだけ。ailiasとかはのちのち。もしくは分けるかも
-    hooktype_definitions = [
+    timing_definitions = [
             u"pre-commit"
             ,u"prepare-commit-msg"
             ,u"commit-msg"
@@ -55,7 +55,7 @@ class Hook(object):
 
     def __initialize_hook(self, hooktype):
         # そのうちdictとかそういう系にするので
-        matchedhook = [h for h in self.hooktype_definitions if h == hooktype]
+        matchedhook = [h for h in self.timing_definitions if h == hooktype]
         if len(matchedhook) == 0:
             print u"git has not hooktype such as " + hooktype
             # TODO InvailedHookTypeExceptionとか
