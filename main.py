@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from hook import configuration_parser
-from install import Installer
+from hooks.hook import configuration_parser
+from hooks.install import Installer
 from rcmanager.loader import SettingFile
 
 def main():
