@@ -8,11 +8,12 @@ from rcmanager.loader import SettingFile
 def main():
     installer = Installer()
     setting_file = SettingFile()
-    #TODO
+    #fixme
     for line in setting_file.get_lines():
         for li in line:
             hook = configuration_parser(li)
             installer.install(hook)
+    installer.ch_script_mode()
 
 if __name__ == '__main__':
     main()
