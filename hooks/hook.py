@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import re
-from os import path, mkdir, sep as path_separator, chmod
+from os import path, mkdir, sep as path_separator
 
 import requests
 import json
