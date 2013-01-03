@@ -35,11 +35,11 @@ def configuration_parser(line):
     return build_hook()
 
 
-class Hook(object):
-    """ abstract class. This work as hook contents. """
+class HookTimingResolver(object):
+    """ judge the hooktype get from setting file is right. """
 
     # ひとまずこんだけ。ailiasとかはのちのち。もしくは分けるかも
-    hooktype_definitions = [
+    timing_definitions = [
             u"pre-commit"
             ,u"prepare-commit-msg"
             ,u"commit-msg"
@@ -49,18 +49,29 @@ class Hook(object):
             ,u"post-merge"
             ]
 
-    def __init__(self, _contents_path, _hooktype):
-        self._contents_path = _contents_path
-        self._hooktype_save_location = self.__initialize_hook(_hooktype)
+    def __init__(self, hooktiming):
+        self.hooktiming = self.__initialize_hook(hooktiming)
 
-    def __initialize_hook(self, hooktype):
+    def __initialize_hook(self, hooktiming):
         # そのうちdictとかそういう系にするので
-        matchedhook = [h for h in self.hooktype_definitions if h == hooktype]
+        matchedhook = [h for h in self.timing_definitions if h == hooktiming]
         if len(matchedhook) == 0:
-            print u"git has not hooktype such as " + hooktype
+            print u"git has not hooktype such as " + hooktiming
             # TODO InvailedHookTypeExceptionとか
             raise Exception
         return matchedhook[0]
+
+    def dir_name(self):
+        return self.hooktiming
+
+
+class Hook(object):
+    """ abstract class.abs.
+        This work as hook contents. """
+
+    def __init__(self, _contents_path, _hooktype):
+        self._contents_path = _contents_path
+        self._hooktype_save_location = HookTimingResolver(_hooktype).dir_name()
 
     def install(self, git_hook_dir):
         #TODO あとでNotImplementExceptionだか作る
