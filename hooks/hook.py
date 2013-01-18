@@ -86,8 +86,8 @@ class Hook(object):
         with open(install_path, 'w') as hook_file:
             hook_file.write(code)
 
-    def _build_fullpath(self, hook_dir, filename):
-        return path.join(hook_dir, self._hooktype_save_location, filename)
+    def _build_fullpath(self, hook_dir):
+        return path.join(hook_dir, self._hooktype_save_location)
 
 
 class GistHook(Hook):
@@ -101,7 +101,7 @@ class GistHook(Hook):
         print u'get from raw-url: %s\n' % raw_url
         print u'description: %s\n' % gist.get_description()
         hook_code = requests.get(raw_url).content
-        full_path = self._build_fullpath(git_hook_dir, gist.get_filename())
+        full_path = self._build_fullpath(git_hook_dir)
         self._write(full_path, hook_code)
 
 
@@ -112,7 +112,7 @@ class LocalHook(Hook):
 
     def install(self, git_hook_dir):
         hook_code = open(self._contents_path).read()
-        full_path = self._build_fullpath(git_hook_dir, self._contents_path.split('/')[-1])
+        full_path = self._build_fullpath(git_hook_dir)
         self._write(full_path, hook_code)
         print 'install local script'
 
