@@ -15,8 +15,13 @@ class SettingFile(object):
         pass
 
     def get_lines(self):
-        with codecs.open(path.join(self.homepath, self.rc_file), 'r', 'UTF-8') as f:
-            yield f.readlines()
+        try:
+            with codecs.open(
+                    path.join(self.homepath, self.rc_file), 'r', 'UTF-8') as f:
+                yield f.readlines()
+
+        except IOError, e:
+            print '.hook_bundle is not in your home directory'
 
 
 
